@@ -41,8 +41,7 @@ LedMax::LedMax(int dinPin, int clkPin, int csPin, int displays)
     pinMode(_clkPin, OUTPUT);
     pinMode(_csPin, OUTPUT);
 
-    _displayMatrixMode = (displays == _display8x8) ? true : false;
-    _maxDisplay = ( (displays <= _displays7) && (displays != _display8x8) ) ? displays : _displays7;
+    _maxDisplay = (displays <= _displaysCols) ? displays : _displaysCols;
 
     memset(_buffer, 0, sizeof(_buffer));
 }
@@ -71,7 +70,7 @@ void LedMax::initMax72xx(byte intensidad)
     setMax72xx(INTENSITY, intensidad);
 
     // Limpia LEDs
-    clearDisplays();
+    clearAll();
 }
 
 
@@ -94,7 +93,7 @@ void LedMax::setMax72xx(volatile byte orden, volatile byte valor) {
 ///
 /// Limpia todos los displays (o las columnas)
 ///
-void LedMax::clearDisplays()
+void LedMax::clearAll()
 {
     for (byte i = 1; i <= _maxDisplay; i++)
     {
@@ -107,7 +106,7 @@ void LedMax::clearDisplays()
 ///
 /// Limpia un display o columna
 ///
-void LedMax::clearDisplay(byte display)
+void LedMax::clearDisplayCol(byte display)
 {
     _buffer[display-1] = 0x00;
     setMax72xx(display, 0x00);
@@ -171,7 +170,7 @@ void LedMax::push()
         _buffer[i-1] = _buffer[i];
         setMax72xx(i, _buffer[i-1]);
     }
-    clearDisplay(_maxDisplay);
+    clearDisplayCol(_maxDisplay);
 }
 
 
@@ -229,6 +228,19 @@ void LedMax::drawByte(int x, int y, byte candidato, int color)
     else
     {
         // do nothing
+    }
+}
+
+
+///
+/// Invierte matriz
+///
+void LedMax::invert()
+{
+    for(int i = 1; i <= _maxDisplay; i++)
+    {
+        _buffer[i-1] = ~_buffer[i-1];
+        setMax72xx(i, _buffer[i-1]);
     }
 }
 
