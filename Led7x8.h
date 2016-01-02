@@ -22,7 +22,7 @@ class Led7x8 {
  
         void setMax72xx(uint8_t registro, uint8_t valor);
  
-        enum comandosMax72xx {NOP, WRD0, WRD1, WRD2, WRD3, WRD4, WRD5, WRD6, WRD7, DECODEMODE, INTENSITY, SCANLIMIT, SHUTDOWN, TEST};
+        enum comandosMax72xx {NOP, WRD0, WRD1, WRD2, WRD3, WRD4, WRD5, WRD6, WRD7, DECODEMODE, INTENSITY, SCANLIMIT, SHUTDOWN,, NU1, NU2, TEST};
  
     public:
         Led7x8(int loadPin, int displays=_displays7);
