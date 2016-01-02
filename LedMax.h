@@ -30,14 +30,14 @@ class LedMax {
     public:
         LedMax(int dinPin, int clkPin, int csPin, int displays=_displaysCols); // por defecto en modo matriz 8x8
 
-        void initMax72xx(byte intensidad=_defaultIntensity);
-        void clearDisplayCol(byte display);
-        void clearAll();
+        void initMax72xx(byte intensidad=_defaultIntensity); // inicializa el integrado MAX72xx para que admita órdenes de pintado
+        void clearDisplayCol(byte display); // borra la información mostrada, según el caso, en la columna de la matriz o el display indicado
+        void clearAll(); // borra la información mostrada
+        void push(); // desplaza a la izquierda todo
         
+        // Métodos para displays LED
         void printAsciiChar(int display, char value, bool dp=false); // imprime caracter ASCII en display
         void printAsciiString(int initPos, int finalPos, String cadena); // imprime cadena ASCII en display
-
-        void push(); // desplaza a la izquierda todo
 
         // Métodos para matriz 8x8
         void plot(int x, int y, int color=1); // ilumina/borra punto en (x, y), por defecto a 1 (ilumina)
